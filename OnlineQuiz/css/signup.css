@@ -1,0 +1,78 @@
+*{
+	margin: 0;
+	padding:0;
+	font-family:sans-serif;
+}
+.container{
+   height:fit-content;
+   margin-top:-25px;
+   background-color:palegreen;
+   height: 650px;
+   background-size: cover;
+   background-repeat: no-repeat;
+}
+.header img{
+    width: 120px;
+    height: 120px;
+    margin:3px;
+    background-color:#f1f1f1;
+    border-radius: 10px;
+}
+.header p{
+   color:palevioletred;
+   margin-top:-40px;
+   font-size: 20px;
+}
+.register{
+   margin:30px 400px;
+   box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, .2);
+   background-color: #fff;
+   padding:15px;
+}
+.register p{
+   font-size: 20px;
+   font-family: sans-serif;
+   margin-bottom: 15px;
+}
+form .form-group{
+   display: flex;
+   flex-direction: column;
+   margin:5px 0px;
+}
+form .form-group1 label, form .form-group label{
+   margin-bottom: 4px;
+   font-size: 17px;
+   font-weight: normal;
+}
+form .form-group input{
+   height: 20px;
+   outline: none;
+   border:1px solid rgba(0, 0, 0, .3);
+}
+form .form-group1{
+   margin:8px 0px;
+}
+form .form-group1 label{
+   margin-right: 50px;
+}
+form .form-group1 input{
+   margin-left:40px;
+}
+form button{
+   margin-left:150px;
+   margin-top: 20px;
+   border-radius: 8px;
+   padding:7px;
+   width:250px;
+   font-size: 18px;
+   color:#fff;
+   background-color:blue;
+   outline: none;
+   border:none;
+   cursor: pointer;
+}
+.register .remain{
+   font-size: 16px;
+   margin-top: 8px;
+   text-align: center;
+}

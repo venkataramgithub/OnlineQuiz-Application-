@@ -1,0 +1,77 @@
+*{
+	margin: 0;
+	padding:0;
+	font-family:sans-serif;
+   text-decoration: none;
+}
+.container{
+   height:fit-content;
+   border-bottom: 3px solid rgba(0, 0, 0, .1);
+   display: flex;
+   flex-direction: row;
+   margin-top:-25px;
+}
+.header img{
+    width: 135px;
+    height: 120px;
+    margin:0px;
+    background-color:#f1f1f1;
+}
+.header p{
+   color:palevioletred;
+   margin-top:-40px;
+   font-size: 22px;
+}
+.nav{
+   background-color:#f8f8f8;
+   height:120px;
+   width:100%;
+}
+.nav ul{
+   display: flex;
+   list-style-type: none;
+   flex-direction: row;
+   float:right;
+   margin-right:100px;
+   margin-top:90px;
+   justify-content: space-between;
+}
+.nav ul li{
+   font-size: 18px;
+   color:red;
+   margin:0 50px;
+   position: relative;
+   cursor: pointer;
+}
+.nav ul li a{
+   color: red;
+}
+.nav ul li:hover .sub-list{
+   display: block;
+   position: absolute;
+}
+.nav ul li .sub-list{
+   display:none;
+   width:180px;
+   position: absolute;
+}
+.nav ul li .sub-list ul{
+   display: flex;
+   margin:0px;
+   padding:4px 10px;
+   flex-direction: column;
+   position: relative;
+   background-color: #fff;
+}
+.nav ul li .sub-list ul li{
+   margin:3px 0px;
+}
+.nav ul li .sub-list ul li a{
+   color:green;
+   font-size: 17px;
+}
+.nav ul li .sub-list ul li a:hover{
+   color:white;
+   background-color: green;
+   padding:3px 5px;
+}

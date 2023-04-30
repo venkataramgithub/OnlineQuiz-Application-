@@ -134,3 +134,6 @@ table td button a{
    color:white;
    padding:2px 5px;
 }
+table td{
+   word-wrap: break-word;
+}

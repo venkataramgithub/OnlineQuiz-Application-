@@ -27,6 +27,7 @@
 		function messagehide(){
 			dom=document.getElementById("message").style;
 			dom.visibility="hidden";
+			location.href="managequiz.php";
 		}
 	</script>
 </head>
@@ -70,6 +71,7 @@
 							<li><a href="addquiz.php">Add Quiz</a></li>
 							<li><a href="managequiz.php">Manage Quiz</a></li>
 							<li><a href="addquizquestion.php">Add Quiz Question</a></li>
+							<li><a href="managequizquestion.php">Manage Quiz Question</a></li>
 							<li><a href="results.php">Answer Details</a></li>
 						</ul>
 					</div>

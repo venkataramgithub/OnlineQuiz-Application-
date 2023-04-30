@@ -75,3 +75,36 @@
    background-color: green;
    padding:3px 5px;
 }
+.home-container{
+   padding:20px 50px;
+   display:flex;
+   flex-direction: row;
+   justify-content: space-around;
+}
+.home-container .home-box{
+   width:300px;
+   height: 150px;
+   background-color:darkcyan;
+   display: flex;
+   margin:100px 20px;
+   align-items: center;
+   flex-direction: row;
+   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .2);
+}
+.home-container .home-box i{
+   font-size: 80px;
+   color:white;
+   margin:10px;
+}
+.home-container .home-box .details{
+   display: block;
+   padding:10px;
+   margin-left: 40px;
+   font-weight: normal;
+   color:orange;
+   font-size: 20px;
+   text-align: center;
+}
+.home-container .home-box .details p{
+   margin-bottom: 10px;
+}

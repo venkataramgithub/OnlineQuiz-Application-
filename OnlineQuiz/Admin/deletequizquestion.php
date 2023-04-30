@@ -7,10 +7,10 @@
 	}
 	$quizid=$_GET['quizid'];
 	if(!$quizid){
-		header('location:managequiz.php');
+		header('location:managequizquestion.php');
 	}
-	$sql=mysqli_query($conn,"delete from addquiz where sl='$quizid'");
+	$sql=mysqli_query($conn,"delete from quizquestion where sl='$quizid'");
 	if($sql){
-		header('location:managequiz.php');
+		header('location:managequizquestion.php');
 	}
 ?>

@@ -1,28 +1,5 @@
 <?php
 	include_once("config.php");
-	if(isset($_POST['submit'])){
-		$name=mysqli_real_escape_string($conn,$_POST['name']);
-		$phone=mysqli_real_escape_string($conn,$_POST['phone']);
-		$gender=mysqli_real_escape_string($conn,$_POST['gender']);
-		$email=mysqli_real_escape_string($conn,$_POST['email']);
-		$password=mysqli_real_escape_string($conn,$_POST['password']);
-		$institute=mysqli_real_escape_string($conn,$_POST['institute']);
-		$course=mysqli_real_escape_string($conn,$_POST['course']);
-
-		$select=mysqli_query($conn,"select * from studentregistration where Email='$email' and Password='$password'");
-		if(mysqli_num_rows($select)>0){
-			$message="user already exist";
-		}
-		else{
-			$sql=mysqli_query($conn,"insert into studentregistration(Name,Phone,Gender,Email,Password,Institute,Course) values('$name','$phone','$gender','$email','$password','$institute','$course')");
-			if($sql){
-				$message="user successfully registered";
-			}
-			else{
-				$message="registration failed";
-			}
-		}
-	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,8 +8,57 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Online Quiz</title>
 	<link rel="stylesheet" href="../css/signup.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<script type="text/javascript">
+		function messagehide() {
+			dom=document.getElementById("message").style;
+			dom.visibility="hidden";
+			location.href="userlogin.php";
+		}
+		function showpassword() {
+			var eyeopen=document.getElementById("eyeopen").style;
+			var eyeclose=document.getElementById("eyeclose").style;
+			var password=document.getElementById("password");
+			if(password.type=="password"){
+				password.type="text";
+				eyeclose.display="none";
+				eyeopen.display="block";
+			}
+			else{
+				password.type="password";
+				eyeclose.display="block";
+				eyeopen.display="none";
+			}
+
+		}
+	</script>
 </head>
 <body>
+	<?php
+		if(isset($_POST['submit'])){
+			$name=mysqli_real_escape_string($conn,$_POST['name']);
+			$phone=mysqli_real_escape_string($conn,$_POST['phone']);
+			$gender=mysqli_real_escape_string($conn,$_POST['gender']);
+			$email=mysqli_real_escape_string($conn,$_POST['email']);
+			$password=mysqli_real_escape_string($conn,$_POST['password']);
+			$institute=mysqli_real_escape_string($conn,$_POST['institute']);
+			$course=mysqli_real_escape_string($conn,$_POST['course']);
+
+			$select=mysqli_query($conn,"select * from studentregistration where Email='$email' and Password='$password'");
+			if(mysqli_num_rows($select)>0){
+				echo '<div class="message" id="message">User already exist<span onclick="messagehid()">&times;</span></div>';
+			}
+			else{
+				$sql=mysqli_query($conn,"insert into studentregistration(Name,Phone,Gender,Email,Password,Institute,Course) values('$name','$phone','$gender','$email','$password','$institute','$course')");
+				if($sql){
+					echo '<div class="message" id="message">User registration completed<span onclick="messagehid()">&times;</span></div>';
+				}
+				else{
+					echo '<div class="message" id="message">User registration failed<span onclick="messagehid()">&times;</span></div>';
+				}
+			}
+		}
+	?>
 	<section class="container">
 		<div class="header">
 			<img src="../RExamsimages/ramlogo.png" alt="logo">
@@ -60,7 +86,7 @@
 				<div class="form-group">
 					<label>Enter Password</label>
 					<input type="password" name="password" required>
-					<span><input type="checkbox" name="showpassword">Show password</span>
+					<span id="eyeopen"><i class="fas fa-eye" onclick="showpassword()"></i></span><span id="eyeclose"><i class="fas fa-eye-slash" onclick="showpassword()"></i></span>
 				</div>
 				<div class="form-group">
 					<label>Enter Institute</label>

@@ -1,8 +1,8 @@
 <?php
-	include_once('config.php');
+	include_once("config.php");
 	session_start();
 	$userid=$_SESSION['userid'];
-	if(!$userid){
+	if(!isset($userid)){
 		header('location:adminlogin.php');
 	}
 ?>
@@ -12,7 +12,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>online exam</title>
-	<link rel="stylesheet" href="../css/adminhomepage.css">
+	<link rel="stylesheet" href="../css/managequiz.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 </head>
 <body>
@@ -46,45 +46,38 @@
 			</ul>
 		</div>
 	</section>
-	<section class="home-container">
-		<div class="home-box">
-			<i class="fas fa-user"></i>
-			<div class="details">
-				<p>Total Examiners</p>
-				<span><?php
-						$sql=mysqli_query($conn,"select count(*) from teacherregistration");
+	<section class="teacher-list">
+		<div class="teachers-box">
+			<p>Manage Quiz</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Sl</th>
+						<th>Quiz Name</th>
+						<th>Question</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php 
+						$sql=mysqli_query($conn,"select * from quizquestion");
 						if(mysqli_num_rows($sql)>0){
-							$fetch=mysqli_fetch_assoc($sql);
-							echo $fetch['count(*)'];
+							$i=1;
+							while($fetch=mysqli_fetch_assoc($sql)){
+								echo '<tr>
+										<td>'.$i.'</td>
+										<td>'.$fetch['quizname'].'</td>
+										<td>'.$fetch['question'].'</td>
+										<td><button><a href="editquizquestion.php?quizid='.$fetch['sl'].'
+										" style="color:white;"><i class="fas fa-edit"></i>Edit</a></button><button><a href="deletequizquestion.php?quizid='.$fetch['sl'].'" style="color:white;"><i class="fas fa-trash"></i>Delete</a></button></td>
+									</tr>';
+								$i++;
+							}
 						}
-				?></span>
-			</div>
-		</div>
-		<div class="home-box">
-			<i class="fas fa-user"></i>
-			<div class="details">
-				<p>Total Students</p>
-				<span><?php
-						$sql=mysqli_query($conn,"select count(*) from studentregistration");
-						if(mysqli_num_rows($sql)>0){
-							$fetch=mysqli_fetch_assoc($sql);
-							echo $fetch['count(*)'];
-						}
-				?></span>
-			</div>
-		</div>
-		<div class="home-box">
-			<i class="fas fa-user"></i>
-			<div class="details">
-				<p>Total Quizs</p>
-				<span><?php
-						$sql=mysqli_query($conn,"select count(*) from addquiz");
-						if(mysqli_num_rows($sql)>0){
-							$fetch=mysqli_fetch_assoc($sql);
-							echo $fetch['count(*)'];
-						}
-				?></span>
-			</div>
+					
+					?>
+				</tbody>
+			</table>
 		</div>
 	</section>
 </body>

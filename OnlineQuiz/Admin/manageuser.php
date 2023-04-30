@@ -1,3 +1,11 @@
+<?php
+	include_once("config.php");
+	session_start();
+	$userid=$_SESSION['userid'];
+	if(!$userid){
+		header('location:adminlogin.php');
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,10 +36,9 @@
 					<div class="sub-list">
 						<ul>
 							<li><a href="addquiz.php">Add Quiz</a></li>
-							<li><a href="#">Manage Quiz</a></li>
+							<li><a href="managequiz.php">Manage Quiz</a></li>
 							<li><a href="addquizquestion.php">Add Quiz Question</a></li>
-							<li><a href="#">Manage Quiz Question</a></li>
-							<li><a href="#">Answer Details</a></li>
+							<li><a href="results.php">Answer Details</a></li>
 						</ul>
 					</div>
 				</li>
@@ -56,16 +63,23 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Samsundhar</td>
-						<td>9211308876</td>
-						<td>Male</td>
-						<td>samsundhar@gmail.com</td>
-						<td>sam123</td>
-						<td>Computer Organization</td>
-						<td><button name="edit">Edit</button><button name="delete">Delete</button></td>
-					</tr>
+					<?php
+						$sql=mysqli_query($conn,"select * from teacherregistration");
+						if(mysqli_num_rows($sql)>0){
+							while($fetch=mysqli_fetch_assoc($sql)){
+								echo '<tr>
+									<td>'.$fetch['sl'].'</td>
+									<td>'.$fetch['Teachername'].'</td>
+									<td>'.$fetch['Phone'].'</td>
+									<td>'.$fetch['Gender'].'</td>
+									<td>'.$fetch['Email'].'</td>
+									<td>'.$fetch['Password'].'</td>
+									<td>'.$fetch['Subject'].'</td>
+									<td><button><a href="editteacher.php?teacherid='.$fetch['sl'].'" style="color:white;"><i class="fas fa-edit"></i>Edit</a></button><button><a href="deleteteacher.php?teacherid='.$fetch['sl'].'" style="color:white;"><i class="fas fa-trash"></i>Delete</button></td>
+								</tr>';
+							}
+						}
+					?>
 				</tbody>
 			</table>
 			<p class="student-list">Students list</p>
@@ -84,17 +98,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Samsundhar</td>
-						<td>9211308876</td>
-						<td>Male</td>
-						<td>samsundhar@gmail.com</td>
-						<td>sam123</td>
-						<td>Computer Organization</td>
-						<td>B.Tech</td>
-						<td><button name="edit">Edit</button><button name="delete">Delete</button></td>
-					</tr>
+					<?php
+						$sql=mysqli_query($conn,"select * from studentregistration");
+						if(mysqli_num_rows($sql)>0){
+							while($fetch=mysqli_fetch_assoc($sql)){
+								echo '<tr>
+									<td>'.$fetch['sl'].'</td>
+									<td>'.$fetch['Name'].'</td>
+									<td>'.$fetch['Phone'].'</td>
+									<td>'.$fetch['Gender'].'</td>
+									<td>'.$fetch['Email'].'</td>
+									<td>'.$fetch['Password'].'</td>
+									<td>'.$fetch['Institute'].'</td>
+									<td>'.$fetch['Course'].'</td>
+									<td><button><a href="editstudent.php?studentid='.$fetch['sl'].'" style="color:white;"><i class="fas fa-edit"></i>Edit</a></button><button><a href="studentdelete.php?studentid='.$fetch['sl'].'" style="color:white;"><i class="fas fa-trash"></i>Delete</a></button></td>
+								</tr>';
+							}
+						}
+					?>
 				</tbody>
 			</table>
 		</div>

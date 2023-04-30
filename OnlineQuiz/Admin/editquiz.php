@@ -5,11 +5,11 @@
 	if(!$userid){
 		header('location:adminlogin.php');
 	}
-	$teacherid=$_GET['teacherid'];
-	if(!$teacherid){
-		header('location:manageuser.php');
+	$quizid=$_GET['quizid'];
+	if(!$quizid){
+		header('location:managequiz.php');
 	}
-	$sql=mysqli_query($conn,"select * from teacherregistration where sl='$teacherid'");
+	$sql=mysqli_query($conn,"select * from addquiz where sl='$quizid'");
 	if(mysqli_num_rows($sql)>0){
 		$fetch=mysqli_fetch_assoc($sql);
 	}
@@ -33,14 +33,13 @@
 <body>
 			<?php 
 				if(isset($_POST['submit'])){
-					$name=mysqli_real_escape_string($conn,$_POST['name']);
-					$phone=mysqli_real_escape_string($conn,$_POST['phone']);
-					$gender=mysqli_real_escape_string($conn,$_POST['gender']);
-					$email=mysqli_real_escape_string($conn,$_POST['email']);
-					$password=mysqli_real_escape_string($conn,$_POST['password']);
-					$subject=mysqli_real_escape_string($conn,$_POST['subject']);
-
-					$select=mysqli_query($conn,"update teacherregistration set Teachername='$name',Phone='$phone',Gender='$gender',Email='$email',Password='$password',Subject='$subject' where sl='$userid'");
+					$quizname=mysqli_real_escape_string($conn,$_POST['quizname']);
+					$noofquestions=mysqli_real_escape_string($conn,$_POST['noofquestions']);
+					$quizstartdate=mysqli_real_escape_string($conn,$_POST['quizstartdate']);
+					$quizenddate=mysqli_real_escape_string($conn,$_POST['quizenddate']);
+					$status=mysqli_real_escape_string($conn,$_POST['status']);
+					
+					$select=mysqli_query($conn,"update addquiz set quizname='$quizname',noofquestions='$noofquestions',quizstartdate='$quizstartdate',quizenddate='$quizenddate',status='$status' where sl='$quizid'");
 					if($select){
 						echo '<div class="message" id="message">Updated successfully<span id="cross" onclick="messagehide()">&times;</span></div>';
 					}
@@ -81,33 +80,29 @@
 	<section class="teacher-list">
 		<div class="teachers-box">
 			
-			<p>Admin SignUp</p>
+			<p>Update Quiz</p>
 			<form method="post" action="" enctype="multipart/form-data">
 				<div class="form-group">
-					<label>Enter Name</label>
-					<input type="text" name="name" <?php echo 'value="'.$fetch['Teachername'].'"';?> required>
+					<label>Enter Quizame</label>
+					<input type="text" name="quizname" <?php echo 'value="'.$fetch['quizname'].'"';?> required>
 				</div>
 				<div class="form-group">
-					<label>Enter Phone</label>
-					<input type="text" name="phone" <?php echo 'value="'.$fetch['Phone'].'"';?> required>
-				</div>
-				<div class="form-group1">
-					<label>Select Gender</label>
-					<input type="radio" name="gender" value="male">Male<input type="radio" name="gender" value="female">Female<input type="radio" name="gender" value="other">Other
+					<label>Enter No Of Questions</label>
+					<input type="text" name="noofquestions" <?php echo 'value="'.$fetch['noofquestions'].'"';?> required>
 				</div>
 				<div class="form-group">
-					<label>Enter Email</label>
-					<input type="email" name="email" <?php echo 'value="'.$fetch['Email'].'"';?> required>
+					<label>Enter Quiz Start Date</label>
+					<input type="date" name="quizstartdate" <?php echo 'value="'.$fetch['quizstartdate'].'"';?> required>
 				</div>
 				<div class="form-group">
-					<label>Enter Password</label>
-					<input type="password" name="password" <?php echo 'value="'.$fetch['Password'].'"';?> required>
+					<label>Enter Quiz End Date</label>
+					<input type="date" name="quizenddate" <?php echo 'value="'.$fetch['quizenddate'].'"';?> required>
 				</div>
 				<div class="form-group">
-					<label>Enter Your Subject</label>
-					<input type="text" name="subject" <?php echo 'value="'.$fetch['Subject'].'"';?> required>
+					<label>Enter Your Status</label>
+					<input type="text" name="status" <?php echo 'value="'.$fetch['status'].'"';?> required>
 				</div>
-				<button name="submit">SignUp</button>
+				<button name="submit">Update</button>
 			</form>
 		</div>
 	</section>

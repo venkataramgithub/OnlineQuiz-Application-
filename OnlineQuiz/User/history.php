@@ -42,16 +42,15 @@
 		</div>
 		
 		<div class="home-container">
-			<h2>Online Quiz</h2>
-			<p>Welcome <?php echo $fetch['Name'] ?> in Online Quiz,select your quiz and then click on to start your quiz</p>
+			<h2>Quiz History</h2>
 			<div class="subject-list">
-				<h4>select subject</h4>
-				<?php
-					$subject=mysqli_query($conn,"select * from addquiz");
+				<p>select subject to view your results</p>
+				<?php 
+					$subject=mysqli_query($conn,"select * from results where studentsl='$userid'");
 					if(mysqli_num_rows($subject)>0){
 						$i=1;
 						while($quiz=mysqli_fetch_assoc($subject)){
-							echo '<p>'.$i.'. '.$quiz['quizname'].'<a href="quiz.php?quizname='.$quiz['quizname'].'">click here</a></p>'; 
+							echo '<p>'.$i.'. <a href="quizresult.php?quizname='.$quiz['subject'].'">'.$quiz['subject'].'</a></p>'; 
 							$i++;
 						}
 					}

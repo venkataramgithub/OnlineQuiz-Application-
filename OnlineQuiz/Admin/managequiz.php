@@ -1,8 +1,8 @@
 <?php
-	include_once('config.php');
+	include_once("config.php");
 	session_start();
 	$userid=$_SESSION['userid'];
-	if(!$userid){
+	if(!isset($userid)){
 		header('location:adminlogin.php');
 	}
 ?>
@@ -12,7 +12,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>online exam</title>
-	<link rel="stylesheet" href="../css/adminhomepage.css">
+	<link rel="stylesheet" href="../css/managequiz.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 </head>
 <body>
@@ -43,6 +43,38 @@
 					</div>
 				</li>
 			</ul>
+		</div>
+	</section>
+	<section class="teacher-list">
+		<div class="teachers-box">
+			<p>Manage Quiz</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Sl</th>
+						<th>Name</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php 
+						$sql=mysqli_query($conn,"select * from addquiz");
+						if(mysqli_num_rows($sql)>0){
+							$i=1;
+							while($fetch=mysqli_fetch_assoc($sql)){
+								echo '<tr>
+										<td>'.$i.'</td>
+										<td>'.$fetch['quizname'].'</td>
+										<td><button><a href="editquiz.php?quizid='.$fetch['sl'].'
+										" style="color:white;"><i class="fas fa-edit"></i>Edit</a></button><button><a href="deletequiz.php?quizid='.$fetch['sl'].'" style="color:white;"><i class="fas fa-trash"></i>Delete</a></button></td>
+									</tr>';
+								$i++;
+							}
+						}
+					
+					?>
+				</tbody>
+			</table>
 		</div>
 	</section>
 </body>

@@ -1,3 +1,8 @@
+*{
+   margin:0px;
+   padding: 0px;
+   font-family:'Poppins',sans-serif;
+}
 .container{
    height:600px;
    background-color: #f8f8f8;
@@ -40,4 +45,18 @@
    margin-left:5px;
    margin-top:5px;
    margin-bottom: 20px;
+}
+.message{
+   width:400px;
+   padding:20px;
+   position: absolute;
+   background-color: green;
+   margin:10px 450px;
+   color:white;
+}
+.message span{
+   font-size: 25px;
+   float: right;
+   margin: 10px;
+   cursor: pointer;
 }

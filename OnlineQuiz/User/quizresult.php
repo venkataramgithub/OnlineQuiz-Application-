@@ -5,9 +5,9 @@
 	if(!$userid){
 		header('location:userlogin.php');
 	}
-	$sql=mysqli_query($conn,"select * from studentregistration where sl='$userid'");
-	if(mysqli_num_rows($sql)>0){
-		$fetch=mysqli_fetch_assoc($sql);
+	$quizname=$_GET['quizname'];
+	if(!$quizname){
+		header('history.php');
 	}
 	if(isset($_POST['logout'])){
 		unset($userid);
@@ -42,20 +42,19 @@
 		</div>
 		
 		<div class="home-container">
-			<h2>Online Quiz</h2>
-			<p>Welcome <?php echo $fetch['Name'] ?> in Online Quiz,select your quiz and then click on to start your quiz</p>
+			<h2>Quiz Results</h2>
 			<div class="subject-list">
-				<h4>select subject</h4>
-				<?php
-					$subject=mysqli_query($conn,"select * from addquiz");
-					if(mysqli_num_rows($subject)>0){
-						$i=1;
-						while($quiz=mysqli_fetch_assoc($subject)){
-							echo '<p>'.$i.'. '.$quiz['quizname'].'<a href="quiz.php?quizname='.$quiz['quizname'].'">click here</a></p>'; 
-							$i++;
-						}
-					}
-				?>
+				<p style="font-size:20px;"><a href="history.php" style="margin-right:150px;"><i class="fas fa-arrow-left"></i><a><?php echo $quizname; ?></p>
+					<?php
+						$sql=mysqli_query($conn,"select * from addquiz where quizname='$quizname'");
+						$totalquestions=mysqli_fetch_assoc($sql);
+						$result=mysqli_query($conn,"select * from results where subject='$quizname'");
+						$correctanswer=mysqli_fetch_assoc($result);
+						echo '<p>Total No Of Questions:<span>'.$totalquestions['noofquestions'].'</span></p>
+							<p>Total No Of Correct Questions:<span>'.$correctanswer['marks'].'</span></p>
+							<p>Total No Of Wrong Questions:<span>'.$totalquestions['noofquestions']-$correctanswer['marks'].'</span></p>
+							<p>Total Marks:<span>'.$correctanswer['marks'].'</span></p>';
+					?>				
 			</div>
 		</div>
 	</section>

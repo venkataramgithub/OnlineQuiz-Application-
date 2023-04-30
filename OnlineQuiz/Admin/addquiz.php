@@ -5,17 +5,6 @@
 	if(!isset($userid)){
 		header('location:adminlogin.php');
 	}
-	if(isset($_POST['submit'])){
-		$quizname=mysqli_real_escape_string($conn,$_POST['quizname']);
-		$startdate=mysqli_real_escape_string($conn,$_POST['startdate']);
-		$enddate=mysqli_real_escape_string($conn,$_POST['enddate']);
-		$status=mysqli_real_escape_string($conn,$_POST['status']);
-
-		$sql=mysqli_query($conn,"insert into addquiz(quizname,quizstartdate,quizenddate,status) values('$quizname','$startdate','$enddate','$status')");
-		if(!$sql){
-			echo 'data not inserted';
-		}
-	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,8 +14,37 @@
 	<title>online exam</title>
 	<link rel="stylesheet" href="../css/addquiz.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+	<script type="text/javascript">
+		function messagehide() {
+			dom=document.getElementById("message").style;
+			dom.visibility="hidden";
+		}
+	</script>
 </head>
 <body>
+	<?php
+		if(isset($_POST['submit'])){
+			$quizname=mysqli_real_escape_string($conn,$_POST['quizname']);
+			$noofquestions=mysqli_real_escape_string($conn,$_POST['noofquestions']);
+			$startdate=mysqli_real_escape_string($conn,$_POST['startdate']);
+			$enddate=mysqli_real_escape_string($conn,$_POST['enddate']);
+			$status=mysqli_real_escape_string($conn,$_POST['status']);
+
+			$quizpresent=mysqli_query($conn,"select * from addquiz where quizname='$quizname'");
+			if(mysqli_num_rows($quizpresent)>0){
+				echo '<div class="message" id="message">Quiz already present<span onclick="messagehide()">&times;</span></div>';
+			}
+			else{
+				$sql=mysqli_query($conn,"insert into addquiz(quizname,noofquestions,quizstartdate,quizenddate,status) values('$quizname','$noofquestions','$startdate','$enddate','$status')");
+				if($sql){
+					echo '<div class="message" id="message">Quiz Added successfully<span onclick="messagehide()">&times;</span></div>';
+				}
+				else{
+					echo '<div class="message" id="message">Quiz not added<span onclick="messagehide()">&times;</span></div>';
+				}
+			}
+		}
+	?>
 	<section class="container">
 		<div class="header">
 			<img src="../RExamsimages/ramlogo.png">
@@ -47,10 +65,9 @@
 					<div class="sub-list">
 						<ul>
 							<li><a href="addquiz.php">Add Quiz</a></li>
-							<li><a href="#">Manage Quiz</a></li>
+							<li><a href="managequiz.php">Manage Quiz</a></li>
 							<li><a href="addquizquestion.php">Add Quiz Question</a></li>
-							<li><a href="#">Manage Quiz Question</a></li>
-							<li><a href="#">Answer Details</a></li>
+							<li><a href="results.php">Answer Details</a></li>
 						</ul>
 					</div>
 				</li>
@@ -65,6 +82,10 @@
 				<div class="form-group">
 					<label>Quiz Name</label>
 					<input type="text" name="quizname" required>
+				</div>
+				<div class="form-group">
+					<label>No of Questions</label>
+					<input type="text" name="noofquestions" required>
 				</div>
 				<div class="form-group">
 					<label>Start date</label>

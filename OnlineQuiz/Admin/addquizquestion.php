@@ -5,23 +5,7 @@
 	if(!isset($userid)){
 		header('location:adminlogin.php');
 	}
-	if(isset($_POST['submit'])){
-		$quizname=mysqli_real_escape_string($conn,$_POST['quizname']);
-		$question=mysqli_real_escape_string($conn,$_POST['question']);
-		$option1=mysqli_real_escape_string($conn,$_POST['option1']);
-		$option2=mysqli_real_escape_string($conn,$_POST['option2']);
-		$option3=mysqli_real_escape_string($conn,$_POST['option3']);
-		$option4=mysqli_real_escape_string($conn,$_POST['option4']);
-		$correctanswer=mysqli_real_escape_string($conn,$_POST['option']);
-
-		$sql=mysqli_query($conn,"insert into quizquestion(quizname,question,option1,option2,option3,option4,correctoption) values('$quizname','$question','$option1','$option2','$option3','$option4','$correctanswer')");
-		if(!$sql){
-			echo 'data not inserted';
-		}
-		else{
-			echo 'data inserted';
-		}
-	}
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,8 +15,33 @@
 	<title>online exam</title>
 	<link rel="stylesheet" href="../css/addquizquestion.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+	<script type="text/javascript">
+		function messagehide() {
+			dom=document.getElementById("message").style;
+			dom.visibility="hidden";
+		}
+	</script>
 </head>
 <body>
+	<?php
+		if(isset($_POST['submit'])){
+			$quizname=mysqli_real_escape_string($conn,$_POST['quizname']);
+			$question=mysqli_real_escape_string($conn,$_POST['question']);
+			$option1=mysqli_real_escape_string($conn,$_POST['option1']);
+			$option2=mysqli_real_escape_string($conn,$_POST['option2']);
+			$option3=mysqli_real_escape_string($conn,$_POST['option3']);
+			$option4=mysqli_real_escape_string($conn,$_POST['option4']);
+			$correctanswer=mysqli_real_escape_string($conn,$_POST['option']);
+
+			$sql=mysqli_query($conn,"insert into quizquestion(quizname,question,option1,option2,option3,option4,correctoption) values('$quizname','$question','$option1','$option2','$option3','$option4','$correctanswer')");
+			if(!$sql){
+				echo '<div class="message" id="message">question Not Added<span onclick="messagehide()">&times;</span></div>';
+			}
+			else{
+				echo '<div class="message" id="message">question Added successfully<span onclick="messagehide()">&times;</span></div>';
+			}
+		}
+	?>
 	<section class="container">
 		<div class="header">
 			<img src="../RExamsimages/ramlogo.png">
@@ -53,10 +62,9 @@
 					<div class="sub-list">
 						<ul>
 							<li><a href="addquiz.php">Add Quiz</a></li>
-							<li><a href="#">Manage Quiz</a></li>
+							<li><a href="managequiz.php">Manage Quiz</a></li>
 							<li><a href="addquizquestion.php">Add Quiz Question</a></li>
-							<li><a href="#">Manage Quiz Question</a></li>
-							<li><a href="#">Answer Details</a></li>
+							<li><a href="results.php">Answer Details</a></li>
 						</ul>
 					</div>
 				</li>

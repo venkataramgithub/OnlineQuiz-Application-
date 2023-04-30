@@ -1,26 +1,37 @@
 <?php
 	include_once("config.php");
 	session_start();
-	if(isset($_POST['login'])){
-		$email=mysqli_real_escape_string($conn,$_POST['email']);
-		$password=mysqli_real_escape_string($conn,$_POST['password']);
-
-		$select=mysqli_query($conn,"select * from teacherregistration where Email='$email' and Password='$password'");
-		if(mysqli_num_rows($select)>0){
-			$fetch=mysqli_fetch_assoc($select);
-			$_SESSION['userid']=$fetch['sl'];
-			header('location:adminhome.php');
-		}
-	}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Online Examinations</title>
-	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.5.2/css/all.min.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.15.2/css/all.min.css">
 	<link rel="stylesheet" href="../css/style.css">
+	<script type="text/javascript">
+		function messagehide() {
+			dom=document.getElementById("message").style;
+			dom.visibility="hidden";
+		}
+	</script>
 </head>
 <body>
+	<?php
+		if(isset($_POST['login'])){
+			$email=mysqli_real_escape_string($conn,$_POST['email']);
+			$password=mysqli_real_escape_string($conn,$_POST['password']);
+
+			$select=mysqli_query($conn,"select * from teacherregistration where Email='$email' and Password='$password'");
+			if(mysqli_num_rows($select)>0){
+				$fetch=mysqli_fetch_assoc($select);
+				$_SESSION['userid']=$fetch['sl'];
+				header('location:adminhome.php');
+			}
+			else{
+				echo '<div class="message" id="message">Entered details are incorrect<span onclick="messagehide()">&times;</span></div>';
+			}
+		}
+	?>
 	<section class="container">
 		<div class="home-container">
 			<div class="box-1">

@@ -1,26 +1,9 @@
 <?php
 	include_once("config.php");
-	if(isset($_POST['submit'])){
-		$name=mysqli_real_escape_string($conn,$_POST['name']);
-		$phone=mysqli_real_escape_string($conn,$_POST['phone']);
-		$gender=mysqli_real_escape_string($conn,$_POST['gender']);
-		$email=mysqli_real_escape_string($conn,$_POST['email']);
-		$password=mysqli_real_escape_string($conn,$_POST['password']);
-		$subject=mysqli_real_escape_string($conn,$_POST['subject']);
-
-		$select=mysqli_query($conn,"select * from teacherregistration where Email='$email' and Password='$password'");
-		if(mysqli_num_rows($select)>0){
-			$message="user already exist";
-		}
-		else{
-			$sql=mysqli_query($conn,"insert into teacherregistration(Teachername,Phone,Gender,Email,Password,Subject) values('$name','$phone','$gender','$email','$password','$subject')");
-			if($sql){
-				$message="user successfully registered";
-			}
-			else{
-				$message="registration failed";
-			}
-		}
+	session_start();
+	$userid=$_SESSION['userid'];
+	if(!$userid){
+		header('location:adminlogin.php');
 	}
 ?>
 <!DOCTYPE html>
@@ -31,8 +14,38 @@
 	<title>online exam</title>
 	<link rel="stylesheet" href="../css/adminsignup.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+	<script>
+		function messagehide() {
+			dom=document.getElementById("message").style;
+			dom.visibility="hidden";
+		}
+	</script>
 </head>
 <body>
+	<?php
+		if(isset($_POST['submit'])){
+			$name=mysqli_real_escape_string($conn,$_POST['name']);
+			$phone=mysqli_real_escape_string($conn,$_POST['phone']);
+			$gender=mysqli_real_escape_string($conn,$_POST['gender']);
+			$email=mysqli_real_escape_string($conn,$_POST['email']);
+			$password=mysqli_real_escape_string($conn,$_POST['password']);
+			$subject=mysqli_real_escape_string($conn,$_POST['subject']);
+
+			$select=mysqli_query($conn,"select * from teacherregistration where Email='$email' and Password='$password'");
+			if(mysqli_num_rows($select)>0){
+				echo '<div class="message" id="message">User already exist<span onclick="messagehide()">&times;</span></div>';
+			}
+			else{
+				$sql=mysqli_query($conn,"insert into teacherregistration(Teachername,Phone,Gender,Email,Password,Subject) values('$name','$phone','$gender','$email','$password','$subject')");
+				if($sql){
+					echo '<div class="message" id="message">User Successfully registered<span onclick="messagehide()">&times;</span></div>';
+				}
+				else{
+					echo '<div class="message" id="message">User registration failed<span onclick="messagehide()">&times;</span></div>';
+				}
+			}
+		}
+	?>
 	<section class="container">
 		<div class="header">
 			<img src="../RExamsimages/ramlogo.png">
@@ -55,8 +68,7 @@
 							<li><a href="addquiz.php">Add Quiz</a></li>
 							<li><a href="#">Manage Quiz</a></li>
 							<li><a href="addquizquestion.php">Add Quiz Question</a></li>
-							<li><a href="#">Manage Quiz Question</a></li>
-							<li><a href="#">Answer Details</a></li>
+							<li><a href="results.php">Answer Details</a></li>
 						</ul>
 					</div>
 				</li>
